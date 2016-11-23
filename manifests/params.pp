@@ -17,7 +17,7 @@ class chrony::params {
       $config_template = 'chrony/chrony.conf.archlinux.erb'
       $config_keysfile = '/etc/chrony.keys'
       $config_keys_template = 'chrony/chrony.keys.archlinux.erb'
-      $config_log_dir = '/var/log/chrony'
+      $config_logdir = '/var/log/chrony'
       $config_keys_owner = 0
       $config_keys_group = 0
       $config_keys_mode  = '0644'

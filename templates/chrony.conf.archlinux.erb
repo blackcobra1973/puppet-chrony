@@ -132,7 +132,7 @@ commandkey <%= @commandkey %>
 # Enable these two options to use this.
 
 dumponexit
-dumpdir /var/log/chrony
+dumpdir <%= @config_logdir %>
 
 # chronyd writes its process ID to a file.  If you try to start a second
 # copy of chronyd, it will detect that the process named in the file is
@@ -163,7 +163,7 @@ dumpdir /var/log/chrony
 # produce some graphs of your system's timekeeping performance, or you
 # need help in debugging a problem.
 
-! logdir /var/log/chrony
+! logdir <%= @config_logdir %>
 ! log measurements statistics tracking
 
 # If you have real time clock support enabled (see below), you might want
