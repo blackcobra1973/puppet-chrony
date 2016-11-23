@@ -13,14 +13,18 @@ class chrony::params {
   case $::osfamily {
     'Archlinux' : {
       $config = '/etc/chrony.conf'
+      $config_driftfile = '/etc/chrony.drift'
       $config_template = 'chrony/chrony.conf.archlinux.erb'
-      $config_keys = '/etc/chrony.keys'
+      $config_keysfile = '/etc/chrony.keys'
       $config_keys_template = 'chrony/chrony.keys.archlinux.erb'
+      $config_logdir = '/var/log/chrony'
       $config_keys_owner = 0
       $config_keys_group = 0
       $config_keys_mode  = '0644'
+      $config_stratumweight = 0
       $package_name = 'chrony'
       $service_name = 'chrony'
+      $service_hasstatus = true
       $servers = {
         '0.pool.ntp.org' => ['iburst'],
         '1.pool.ntp.org' => ['iburst'],
