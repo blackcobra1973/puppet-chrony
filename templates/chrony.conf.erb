@@ -1,8 +1,10 @@
 # File managed by Puppet
 
-<% [@servers].flatten.each do |server| -%>
-server <%= server %><% if @offline -%> offline<% end %>
-<% end -%>
+<% if @servers.is_a?(Hash) then @servers.keys.sort.each do |server| -%>
+server <%= server %> <%= @servers[server].join(' ') %>
+<% end else Array(@servers).each do |server| -%>
+server <%= server %> iburst
+<% end end -%>
 <% [@refclock].flatten.each do |refclock| -%>
 refclock <%= refclock %>
 <% end -%>
