@@ -1,3 +1,7 @@
+# == Class: chrony
+#
+# Manages the chronyd NTP client/server daemon.
+#
 class chrony (
   $commandkey           = $chrony::params::commandkey,
   $config               = $chrony::params::config,
@@ -18,21 +22,21 @@ class chrony (
   $service_enable       = $chrony::params::service_enable,
   $service_ensure       = $chrony::params::service_ensure,
   $service_manage       = $chrony::params::service_manage,
-  $service_name         = $chrony::params::service_name,) inherits
-chrony::params {
+  $service_name         = $chrony::params::service_name,
+) inherits chrony::params
+{
 
   if ! $config_keys_manage and $chrony_password != 'unset'  {
     fail("Setting \$config_keys_manage false and \$chrony_password at same time in ${module_name} is not possible.")
   }
 
-  include '::chrony::install'
-  include '::chrony::config'
-  include '::chrony::service'
+#  include '::chrony::install'
+#  include '::chrony::config'
+#  include '::chrony::service'
 
-  anchor { 'chrony::begin': }
-
-  anchor { 'chrony::end': }
-
-  Anchor['chrony::begin'] -> Class['::chrony::install'] -> Class['::chrony::config'
-    ] ~> Class['::chrony::service'] -> Anchor['chrony::end']
+  anchor{ 'chrony::begin': } ->
+  Class{ '::chrony::install': } ->
+  Class{ '::chrony::config': } ~>
+  Class{ '::chrony::service': } ->
+  anchor{ 'chrony::end': }
 }
