@@ -20,7 +20,7 @@ port 0
 stratumweight 0
 <% end -%>
 
-driftfile <%= @driftfile %>
+driftfile <%= @config_driftfile %>
 
 <% if @sync_local_clock %>
 rtcsync
@@ -44,7 +44,7 @@ bindcmdaddress <%= bindcmdaddress %>
 local stratum 10
 <% end -%>
 
-keyfile <%= @keys_file %>
+keyfile <%= @config_keysfile %>
 
 commandkey 1
 

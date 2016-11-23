@@ -99,7 +99,7 @@ server <%= server %> iburst
 # immediately so that it doesn't gain or lose any more time.  You
 # generally want this, so it is uncommented.
 
-driftfile /etc/chrony.drift
+driftfile <%= @config_driftfile %>
 
 # If you want to use the program called chronyc to configure aspects of
 # chronyd's operation once it is running (e.g. tell it the Internet link
@@ -108,7 +108,7 @@ driftfile /etc/chrony.drift
 # exchanges between cooperating machines.)  Again, this option is
 # assumed by default.
 
-keyfile /etc/chrony.keys
+keyfile <%= @config_keysfile %>
 
 # Tell chronyd which numbered key in the file is used as the password
 # for chronyc. (You can pick any integer up to 2**32-1.  '1' is just a

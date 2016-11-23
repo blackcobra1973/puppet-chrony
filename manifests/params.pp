@@ -13,9 +13,9 @@ class chrony::params {
   case $::osfamily {
     'Archlinux' : {
       $config = '/etc/chrony.conf'
-      $config_driftfile = '/var/lib/chrony/drift'
+      $config_driftfile = '/etc/chrony.drift'
       $config_template = 'chrony/chrony.conf.archlinux.erb'
-      $config_keys = '/etc/chrony.keys'
+      $config_keysfile = '/etc/chrony.keys'
       $config_keys_template = 'chrony/chrony.keys.archlinux.erb'
       $config_log_dir = '/var/log/chrony'
       $config_keys_owner = 0
