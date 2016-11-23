@@ -10,16 +10,16 @@
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of version 2 of the GNU General Public License as
 # published by the Free Software Foundation.
-# 
+#
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-# 
+#
 #
 #######################################################################
 ### COMMENTS
@@ -47,16 +47,16 @@
 ! server ntp1.your-isp.com
 ! server ntp.public-server.org
 <% if @servers.is_a?(Hash) then @servers.keys.sort.each do |server| -%>
-server <%= server %> <%= @servers[server].join(' ') %>
+server <%= server %> <%= @servers[server].join(' ') %> <% if @offline -%> offline<% end %>
 <% end else Array(@servers).each do |server| -%>
-server <%= server %> iburst
+server <%= server %> iburst <% if @offline -%> offline<% end %>
 <% end end -%>
 
 #server 0.nl.pool.ntp.org
 #server 1.nl.pool.ntp.org
 #server 2.nl.pool.ntp.org
 #server 3.nl.pool.ntp.org
- 
+
 # However, for dial-up use you probably want these instead.  The word
 # 'offline' means that the server is not visible at boot time.  Use
 # chronyc's 'online' command to tell chronyd that these servers have
@@ -190,6 +190,9 @@ allow <%= allowed %>
 
 # .. but disallow the 192.168.100.* subnet of that,
 
+<% Array(@denyhosts).each do |denied| -%>
+deny <%= denied %>
+<% end -%>
 ! deny 192.168.100/24
 
 # You can have as many allow and deny directives as you need.  The order
@@ -197,7 +200,12 @@ allow <%= allowed %>
 #
 
 # http://chrony.tuxfamily.org/manual.html#port-directive
+
+<% if !@serve_ntp -%>
+port 0
+<% else %>
 port <%= @port %>
+<% end -%>
 
 # If you want chronyd to act as an NTP broadcast server, enable and edit
 # (and maybe copy) the following line.  This means that a broadcast
@@ -216,7 +224,9 @@ port <%= @port %>
 # NTP 'hops' away from an authoritative source (atomic clock, GPS
 # receiver, radio clock etc).
 
-! local stratum 10
+<% if @udlc -%>
+local stratum 10
+<% end -%>
 
 # Normally, chronyd will keep track of how many times each client
 # machine accesses it.  The information can be accessed by the 'clients'
@@ -224,11 +234,13 @@ port <%= @port %>
 # following line.  This will save a bit of memory if you have many
 # clients.
 
-! noclientlog
+<% if !@client_log -%>
+noclientlog
+<% end -%>
 
 # The clientlog size is limited to 512KB by default.  If you have many
 # clients, especially in many different subnets, you might want to
-# increase the limit. 
+# increase the limit.
 
 ! clientloglimit 4194304
 
@@ -301,7 +313,9 @@ rtcfile /etc/chrony.rtc
 # that will work better if your RTC maintains local time.  You take your
 # pick!
 
+<% if @rtconutc -%>
 rtconutc
+<% end -%>
 
 # By default chronyd assumes that the enhanced RTC device is accessed as
 # /dev/rtc.  If it's accessed somewhere else on your system (e.g. you're
