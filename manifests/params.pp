@@ -2,7 +2,7 @@ class chrony::params {
   $bindcmdaddress     = [ '127.0.0.1', '::1' ]
   $chrony_password    = 'xyzzy'
   $client_log         = false
-  $commandkey         = 1
+  $commandkey         = 0
   $config_keys_manage = true
   $denyhosts          = []
   $generatecommandkey = true
@@ -25,9 +25,9 @@ class chrony::params {
     'Archlinux' : {
       $config = '/etc/chrony.conf'
       $config_driftfile = '/etc/chrony.drift'
-      $config_template = 'chrony/chrony.conf.archlinux.erb'
+      $config_template = 'chrony/chrony.conf.erb'
       $config_keysfile = '/etc/chrony.keys'
-      $config_keys_template = 'chrony/chrony.keys.archlinux.erb'
+      $config_keys_template = 'chrony/chrony.keys.erb'
       $config_logdir = '/var/log/chrony'
       $config_keys_owner = 0
       $config_keys_group = 0
