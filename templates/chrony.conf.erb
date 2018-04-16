@@ -14,6 +14,8 @@ acquisitionport <%= @source_port %>
 <% end -%>
 <% if !@serve_ntp -%>
 port 0
+<% else %>
+port <%= @port %>
 <% end -%>
 
 <% if @stratumweight -%>
@@ -28,12 +30,12 @@ rtcsync
 
 makestep 10 3
 
-<% [@client_allow].flatten.each do |client_allow| -%>
-allow <%= client_allow %>
+<% Array(@queryhosts).each do |allowed| -%>
+allow <%= allowed %>
 <% end -%>
 
-<% [@client_deny].flatten.each do |client_deny| -%>
-deny <%= client_deny %>
+<% Array(@denyhosts).each do |denied| -%>
+deny <%= denied %>
 <% end -%>
 
 <% [@bindcmdaddress].flatten.each do |bindcmdaddress| -%>
@@ -46,9 +48,11 @@ local stratum 10
 
 keyfile <%= @config_keysfile %>
 
-commandkey 1
+commandkey <%= @commandkey %>
 
+<% if @generatecommandkey %>
 generatecommandkey
+<% end -%>
 
 <% if !@client_log -%>
 noclientlog
