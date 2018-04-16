@@ -11,7 +11,7 @@ class chrony::params {
   $package_ensure     = 'present'
   $port               = 0
   $queryhosts         = []
-  $refclock           = []
+  $refclocks          = []
   $rtconutc           = true
   $serve_ntp          = false
   $service_enable     = true

@@ -5,7 +5,7 @@ server <%= server %> <%= @servers[server].join(' ') %>
 <% end else Array(@servers).each do |server| -%>
 server <%= server %> iburst
 <% end end -%>
-<% [@refclock].flatten.each do |refclock| -%>
+<% [@refclocks].flatten.each do |refclock| -%>
 refclock <%= refclock %>
 <% end -%>
 
